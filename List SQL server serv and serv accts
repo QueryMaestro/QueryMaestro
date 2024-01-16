@@ -1,0 +1,13 @@
+@echo off
+echo SQL Server Services and their Service Accounts:
+echo -------------------------------------------------
+for /f "tokens=1,2 delims=: " %%a in ('sc query state^= all ^| findstr SERVICE_NAME') do (
+    if "%%a"=="SERVICE_NAME" (
+        for /f "tokens=2 delims=: " %%i in ('sc qc "%%b" ^| findstr SERVICE_START_NAME') do (
+            echo %%b : %%i
+        )
+    )
+)
+echo -------------------------------------------------
+echo Done.
+pause
